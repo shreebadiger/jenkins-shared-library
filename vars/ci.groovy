@@ -1,39 +1,12 @@
 def call () {
-
-pipeline {
-    agent {
-        node { label'workstation'}
+    node ('workstation') {
+        stage('Code checkout'){}
+        stage('Compile'){}
+        stage('Test case'){}
+        stage('Integration test'){}
+        stage('Build'){}
+        stage('Release'){}
     }
-    stages{
-        stage('compiling') {
-            steps{
-              echo 'compiling'
-          }
-        }
+     
 
-         stage('Test'){
-            steps{
-              echo 'Test'
-          }
-         }
-
-         stage('Integration Test'){
-            steps{
-              echo 'Test'
-          }
-         }
-
-         stage('Build'){
-            steps{
-              echo 'Build'
-          }
-         }
-
-         stage('Release App'){
-            steps{
-              echo 'Release'
-          }
-         }
-    }      
-}
 }
