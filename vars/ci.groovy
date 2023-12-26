@@ -1,5 +1,6 @@
 def call () {
     node ('workstation') {
+        sh 'env'
         stage('Code checkout'){}
         stage('Compile'){}
         stage('Test case'){}
