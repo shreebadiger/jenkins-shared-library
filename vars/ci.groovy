@@ -1,5 +1,6 @@
 def call () {
     node ('workstation') {
+        sh "find . | sed -e '1d' | xargs rm -rf"
         if(env.TAG_NAME ==~ ".*") {
             env.branchName = env.TAG_NAME
         } else
@@ -13,7 +14,7 @@ def call () {
             userRemoteConfigs: [[url:"https://github.com/shreebadiger/expense-backend.git"]]
            )
         }
-        sh 'ls'
+    
         stage('Compile'){}
        
         if (env.BRANCH_NAME == "main") {
