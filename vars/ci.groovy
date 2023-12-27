@@ -23,18 +23,22 @@ def call () {
     
         stage('Compile'){}
        
-        if (env.BRANCH_NAME == "main") {
-            stage('Build'){}
-        }
-        else if (env.BRANCH_NAME ==~ "PR.*"){
+        if (env.JOB_BASE_NAME ==~ "PR.*") {
+            sh 'echo PR'
             stage('Test case'){}
             stage('Integration test'){}
         }
+        else if (env.BRANCH_NAME == "main"){
+            sh 'echo main' 
+            stage('Build'){}
+        }
         else if (env.TAG_NAME ==~ ".*"){
+            sh 'echo tag'
             stage('Build'){}
             stage('Release'){}
         }
         else {
+            sh 'echo branch'
             stage('Test case'){}
         }       
     }    
