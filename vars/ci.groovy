@@ -44,12 +44,7 @@ def call () {
         else {
             sh 'echo branch'
             stage('Test case'){}
+            //sh 'npm test'
         }       
     }    
 }
-        //stage('Code checkout'){}
-        //stage('Compile'){}
-        //stage('Test case'){}
-        //stage('Integration test'){}
-        //stage('Build'){}
-        //stage('Release'){}
