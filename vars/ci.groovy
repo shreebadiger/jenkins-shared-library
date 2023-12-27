@@ -16,17 +16,21 @@ def call () {
            // git branch: 'main', url: 'https://github.com/shreebadiger/expense-backend.git'
            checkout scmGit(
             branches: [[name : "${branch_name}"]],
-            userRemoteConfigs: [[url:"https://github.com/shreebadiger/expense-backend.git"]]
+            userRemoteConfigs: [[url:"https://github.com/shreebadiger/${repo_name}"]]
            )
            sh 'cat Jenkinsfile'
         }
-    
-        stage('Compile'){}
+        
+        if(app_type == "nodejs"){
+        stage('Download dependencies'){
+            sh 'npm install'
+        }
+        }
        
         if (env.JOB_BASE_NAME ==~ "PR.*") {
             sh 'echo PR'
             stage('Test case'){}
-            stage('Integration test'){}
+            stage('Code Quality'){}
         }
         else if (env.BRANCH_NAME == "main"){
             sh 'echo main' 
