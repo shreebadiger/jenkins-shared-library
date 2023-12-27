@@ -1,26 +1,33 @@
 def call () {
     node ('workstation') {
-        sh 'env'
+        if(env.TAG_NAME ==~ ".*") {
+            env.branchName = env.TAG_NAME
+        } else
+        {
+            env.branchName = env.BRANCH_NAME
+        }
+        stage('Code checkout'){
+           // git branch: 'main', url: 'https://github.com/shreebadiger/expense-backend.git'
+           checkout scmGit(
+            branches: [[name : "${branchName}"]],
+            userRemoteConfigs: [[url:"https://github.com/shreebadiger/expense-backend.git"]]
+           )
+        }
+        sh 'ls'
+        stage('Compile'){}
+       
         if (env.BRANCH_NAME == "main") {
-            stage('Code checkout'){}
-            stage('Compile'){}
             stage('Build'){}
         }
         else if (env.BRANCH_NAME ==~ "PR.*"){
-            stage('Code checkout'){}
-            stage('Compile'){}
             stage('Test case'){}
             stage('Integration test'){}
         }
         else if (env.TAG_NAME ==~ ".*"){
-            stage('Code checkout'){}
-            stage('Compile'){}
             stage('Build'){}
             stage('Release'){}
         }
         else {
-            stage('Code checkout'){}
-            stage('Compile'){}
             stage('Test case'){}
         }       
     }    
