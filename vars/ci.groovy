@@ -48,7 +48,12 @@ def call () {
         else if (env.TAG_NAME ==~ ".*"){
             sh 'echo tag'
             stage('Build'){}
-            stage('Release'){}
+            sh 'zip -r ${repo_name}-${TAG_NAME}.zip *'
+            stage('Release'){
+                env.ARTIFACTORY_PASSWORD = AWS_SSM_PARAM('artifactory.password')
+               wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${ARTIFACTORY_PASSWORD}", var: 'PASSWORD']]])
+               curl -sSf -u "admin:${ARTIFACTORY_PASSWORD}" -X PUT -T ${repo_name}-${TAG_NAME}.zip 'http://artifactory.sbadiger93.online:8081/artifactory/example-repo-local/${repo_name}-${TAG_NAME}.zip'
+              }
         }
         else {
             sh 'echo branch'
