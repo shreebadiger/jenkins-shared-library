@@ -1,5 +1,5 @@
 def AWS_SSM_PARAM(param_name){
-    def OUTPUT = sh (script: "aws ssm get-parameter --name sonar.token --with-decryption --query 'Parameter.Value' --output text",returnStdout: true).trim()
+    def OUTPUT = sh (script: "aws ssm get-parameter --name ${param_name} --with-decryption --query 'Parameter.Value' --output text",returnStdout: true).trim()
     return(OUTPUT)
 }
 def call () {
