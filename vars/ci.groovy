@@ -23,14 +23,12 @@ def call () {
             userRemoteConfigs: [[url:"https://github.com/shreebadiger/${repo_name}"]]
            )
            sh 'cat Jenkinsfile'
-        }
-        
+        }       
         if(app_type == "nodejs"){
         stage('Download dependencies'){
             sh 'npm install'
         }
         }
-       
         if (env.JOB_BASE_NAME ==~ "PR.*") {
             sh 'echo PR'
             stage('Test case'){
@@ -38,7 +36,7 @@ def call () {
             }
             stage('Code Quality'){
 
-            env.SONAR_TOKEN = AWS_SSM_PARAM( param_name: 'sonar.token')
+            env.SONAR_TOKEN = AWS_SSM_PARAM(param_name: 'sonar.tpken')
             sh 'sonar-scanner -Dsonar.host.url=http://172.31.83.244:9000 -Dsonar.login=${SONAR_TOKEN} -Dsonar.projectKey=${repo_name}'
             }
         }
