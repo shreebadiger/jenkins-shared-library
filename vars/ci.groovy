@@ -47,8 +47,10 @@ def call () {
         }
         else if (env.TAG_NAME ==~ ".*"){
             sh 'echo tag'
-            stage('Build'){}
+            stage('Build'){
             sh 'zip -r ${repo_name}-${TAG_NAME}.zip *'
+            }
+            
             stage('Release'){
                 env.ARTIFACTORY_PASSWORD = AWS_SSM_PARAM('artifactory.password')
                wrap([$class: 'MaskPasswordsBuildWrapper', varPasswordPairs: [[password: "${ARTIFACTORY_PASSWORD}", var: 'PASSWORD']]])
