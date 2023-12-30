@@ -7,11 +7,11 @@ def call(){
             sh 'terraform init'
              //sh 'terraform apply -auto-approve'
             }
-            stage('Terraform Destroy'){
-            sh 'terraform init'
-            sh 'terraform state rm aws_ami_from_instance.ami'
-            sh 'terraform destroy -auto-approve'
-            }
+            //stage('Terraform Destroy'){
+            //sh 'terraform init'
+            //sh 'terraform state rm aws_ami_from_instance.ami'
+            //sh 'terraform destroy -auto-approve'
+            //}
         }
       }
     }
