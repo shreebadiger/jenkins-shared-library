@@ -9,6 +9,7 @@ def call(){
             }
          stage('Terraform Destroy'){
           sh 'terraform init'
+          sh 'pwd'
           sh 'terraform state rm aws_ami_from_instance.ami'
           sh 'terraform destroy -auto-approve'
             }
